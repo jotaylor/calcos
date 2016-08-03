@@ -245,7 +245,7 @@ def extract1D(input, incounts=None, output=None,
     ofd = add_column_comment(ofd, 'BACKGROUND_PER_PIXEL',
                              'Average background per pixel')
     ofd.writeto(output, output_verify="silentfix")
-    del ofd
+#    del ofd
     ifd_e.close()
     if ifd_c is not None:
         ifd_c.close()
