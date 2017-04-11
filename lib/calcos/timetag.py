@@ -2108,15 +2108,20 @@ def walkCorrection(fastCoordinate, slowCoordinate, reference_file, segment):
         The array of lookups in the reference array
 
     """
+    fastCoordinate = fastCoordinate.astype(np.float64)
+    slowCoordinate = slowCoordinate.astype(np.float64)
     nevents = len(fastCoordinate)
     fd = fits.open(reference_file)
     for extension in fd[1:]:
         if extension.header['SEGMENT'] == segment:
             reference_array = extension.data
             break
-    delta = np.zeros(len(fastCoordinate))
+    reference_array = reference_array.astype(np.float64)
+    delta = np.zeros(len(fastCoordinate),dtype=np.float64)
+    print("Fast, Slow, reference dtype:".format(fastCoordinate.dtype, slowCoordinate.dtype, reference_array.dtype))
     delta = bilinear_interpolation(fastCoordinate, slowCoordinate, 
                            reference_array)
+    print("Delta type:".format(delta.dtype))
     return delta
 
 def bilinear_interpolation(fastCoordinate, slowCoordinate,
